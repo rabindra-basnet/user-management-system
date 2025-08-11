@@ -85,10 +85,10 @@ export function LoginForm({ onSuccess, redirectTo = '/dashboard' }: LoginFormPro
       const originalToken = localStorage.getItem('access_token');
       localStorage.setItem('access_token', tempToken);
       
-      const response = await apiClient.client.post('/auth/login/2fa', { code });
-      
+      const response = await apiClient.login2FA(code);
+
       // Update with real tokens
-      const { user, token } = response.data;
+      const { user, token } = response;
       localStorage.setItem('access_token', token.access_token);
       localStorage.setItem('refresh_token', token.refresh_token);
       

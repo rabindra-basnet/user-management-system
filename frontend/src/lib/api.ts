@@ -359,8 +359,36 @@ class APIClient {
     await this.client.post('/auth/2fa/verify', { code });
   }
 
+  // Login with 2FA
+  async login2FA(code: string): Promise<any> {
+    const response = await this.client.post('/auth/login/2fa', { code });
+    return response.data;
+  }
+
   async disable2FA(password: string, code: string): Promise<void> {
     await this.client.post('/auth/2fa/disable', { password, code });
+  }
+
+  // Admin Statistics
+  async getStatistics(): Promise<any> {
+    const response = await this.client.get('/admin/statistics');
+    return response.data;
+  }
+
+  // Audit Logs
+  async getAuditLogs(params: {
+    skip?: number;
+    limit?: number;
+    action?: string;
+    status?: string;
+  }): Promise<any> {
+    const response = await this.client.get('/admin/audit-logs', { params });
+    return response.data;
+  }
+
+  // Public getter for client (for advanced usage)
+  get httpClient(): AxiosInstance {
+    return this.client;
   }
 }
 

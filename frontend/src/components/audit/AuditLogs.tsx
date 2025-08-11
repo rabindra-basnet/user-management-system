@@ -44,15 +44,12 @@ export function AuditLogs() {
   const { data: auditLogs, isLoading, error } = useQuery({
     queryKey: ['audit-logs', page, search, actionFilter, statusFilter],
     queryFn: async () => {
-      const response = await apiClient.client.get('/admin/audit-logs', {
-        params: {
-          skip: (page - 1) * pageSize,
-          limit: pageSize,
-          action: actionFilter || undefined,
-          status: statusFilter || undefined,
-        },
+      return await apiClient.getAuditLogs({
+        skip: (page - 1) * pageSize,
+        limit: pageSize,
+        action: actionFilter || undefined,
+        status: statusFilter || undefined,
       });
-      return response.data;
     },
     enabled: canReadAudit,
   });

@@ -34,9 +34,7 @@ export default function DashboardPage() {
   const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ['user-stats'],
     queryFn: async () => {
-      // This would be an actual API endpoint
-      const response = await apiClient.client.get('/users/statistics');
-      return response.data as DashboardStats;
+      return await apiClient.getStatistics() as DashboardStats;
     },
     enabled: canReadUsers,
   });
